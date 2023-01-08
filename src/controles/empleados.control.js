@@ -2,7 +2,7 @@ import { pool } from "../db.js"
 
 export const getEmpleados = async (req, res) => {
   try {
-    const [rows] = await pool.query("SELECT * FROM empleado")
+    const [rows] = await pool.query("SELECT * FROM empleados")
     res.json(rows)
   } catch (error) {
     return res.status(500).json({ message: "te equivocaste" })
@@ -12,7 +12,7 @@ export const getEmpleados = async (req, res) => {
 export const getEmpleado = async (req, res) => {
   try {
     const { id } = req.params
-    const [rows] = await pool.query("SELECT * FROM empleado WHERE id = ?", [
+    const [rows] = await pool.query("SELECT * FROM empleados WHERE id = ?", [
       id,
     ])
 
@@ -29,7 +29,7 @@ export const getEmpleado = async (req, res) => {
 export const deleteEmpleado = async (req, res) => {
   try {
     const { id } = req.params
-    const [rows] = await pool.query("DELETE FROM empleado WHERE id = ?", [id])
+    const [rows] = await pool.query("DELETE FROM empleados WHERE id = ?", [id])
 
     if (rows.affectedRows <= 0) {
       return res.status(404).json({ message: "Empleado no encontrado" })
@@ -45,7 +45,7 @@ export const createEmpleado = async (req, res) => {
   try {
     const { name, salary } = req.body
     const [rows] = await pool.query(
-      "INSERT INTO empleado (name, salary) VALUES (?, ?)",
+      "INSERT INTO empleados (name, salary) VALUES (?, ?)",
       [name, salary]
     )
     res.status(201).json({ id: rows.insertId, name, salary })
@@ -60,14 +60,14 @@ export const updateEmpleado = async (req, res) => {
     const { name, salary } = req.body
 
     const [result] = await pool.query(
-      "UPDATE empleado SET name = IFNULL(?, name), salary = IFNULL(?, salary) WHERE id = ?",
+      "UPDATE empleados SET name = IFNULL(?, name), salary = IFNULL(?, salary) WHERE id = ?",
       [name, salary, id]
     )
 
     if (result.affectedRows === 0)
       return res.status(404).json({ message: "Empleado no encontrado" })
 
-    const [rows] = await pool.query("SELECT * FROM empleado WHERE id = ?", [
+    const [rows] = await pool.query("SELECT * FROM empleados WHERE id = ?", [
       id,
     ])
 
