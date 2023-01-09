@@ -11,9 +11,9 @@ export const getEmpleados = async (req, res) => {
 
 export const getEmpleado = async (req, res) => {
   try {
-    const { id } = req.params
-    const [rows] = await pool.query("SELECT * FROM empleados WHERE id = ?", [
-      id,
+    const { idEmpleado } = req.params
+    const [rows] = await pool.query("SELECT * FROM empleados WHERE idEmpleado = ?", [
+      idEmpleado,
     ])
 
     if (rows.length <= 0) {
@@ -28,14 +28,16 @@ export const getEmpleado = async (req, res) => {
 
 export const deleteEmpleado = async (req, res) => {
   try {
-    const { id } = req.params
-    const [rows] = await pool.query("DELETE FROM empleados WHERE id = ?", [id])
+    const { idEmpleado } = req.params
+    const [rows] = await pool.query("DELETE FROM empleados WHERE idEmpleado = ?", [idEmpleado])
 
     if (rows.affectedRows <= 0) {
       return res.status(404).json({ message: "Empleado no encontrado" })
     }
 
-    res.sendStatus(204)
+    //res.sendStatus(204)
+    res.status(201).json({ message: "Empleado borrado con éxito" })
+
   } catch (error) {
     return res.status(500).json({ message: "te equivocaste" })
   }
@@ -43,12 +45,12 @@ export const deleteEmpleado = async (req, res) => {
 
 export const createEmpleado = async (req, res) => {
   try {
-    const { nombre, salario } = req.body
+    const { nombreE, salarioE } = req.body
     const [rows] = await pool.query(
-      "INSERT INTO empleados (nombre, salario) VALUES (?, ?)",
-      [nombre, salario]
+      "INSERT INTO empleados (nombreE, salarioE) VALUES (?, ?)",
+      [nombreE, salarioE]
     )
-    res.status(201).json({ id: rows.insertId, nombre, salario })
+    res.status(201).json({ idEmpleado: rows.insertId, nombreE, salarioE })
   } catch (error) {
     return res.status(500).json({ message: "te equivocaste" })
   }
@@ -56,19 +58,19 @@ export const createEmpleado = async (req, res) => {
 
 export const updateEmpleado = async (req, res) => {
   try {
-    const { id } = req.params
-    const { nombre, salario } = req.body
+    const { idEmpleado } = req.params
+    const { nombreE, salarioE } = req.body
 
     const [result] = await pool.query(
-      "UPDATE empleados SET nombre = IFNULL(?, nombre), salario = IFNULL(?, salario) WHERE id = ?",
-      [nombre, salario, id]
+      "UPDATE empleados SET nombreE = IFNULL(?, nombreE), salarioE = IFNULL(?, salarioE) WHERE idEmpleado = ?",
+      [nombreE, salarioE, idEmpleado]
     )
 
     if (result.affectedRows === 0)
       return res.status(404).json({ message: "Empleado no encontrado" })
 
-    const [rows] = await pool.query("SELECT * FROM empleados WHERE id = ?", [
-      id,
+    const [rows] = await pool.query("SELECT * FROM empleados WHERE idEmpleado= ?", [
+      idEmpleado,
     ])
 
     res.json(rows[0])
