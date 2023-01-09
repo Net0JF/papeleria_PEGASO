@@ -43,12 +43,12 @@ export const deleteEmpleado = async (req, res) => {
 
 export const createEmpleado = async (req, res) => {
   try {
-    const { name, salary } = req.body
+    const { nombre, salario } = req.body
     const [rows] = await pool.query(
-      "INSERT INTO empleados (name, salary) VALUES (?, ?)",
-      [name, salary]
+      "INSERT INTO empleados (nombre, salario) VALUES (?, ?)",
+      [nombre, salario]
     )
-    res.status(201).json({ id: rows.insertId, name, salary })
+    res.status(201).json({ id: rows.insertId, nombre, salario })
   } catch (error) {
     return res.status(500).json({ message: "te equivocaste" })
   }
@@ -57,11 +57,11 @@ export const createEmpleado = async (req, res) => {
 export const updateEmpleado = async (req, res) => {
   try {
     const { id } = req.params
-    const { name, salary } = req.body
+    const { nombre, salario } = req.body
 
     const [result] = await pool.query(
-      "UPDATE empleados SET name = IFNULL(?, name), salary = IFNULL(?, salary) WHERE id = ?",
-      [name, salary, id]
+      "UPDATE empleados SET nombre = IFNULL(?, nombre), salario = IFNULL(?, salario) WHERE id = ?",
+      [nombre, salario, id]
     )
 
     if (result.affectedRows === 0)
