@@ -6,7 +6,7 @@ const router = Router()
 
 
 
-router.get('/ping', ping);
+router.get('/pang', ping);
 
 export default router
 
