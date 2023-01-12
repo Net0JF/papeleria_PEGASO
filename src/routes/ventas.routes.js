@@ -13,14 +13,14 @@ const router = Router();
 router.get("/ventas", getVentas);
 
 // GET An ventas
-router.get("/ventas/:idVendedor", getVenta);
+router.get("/ventas/:idVenta", getVenta);
 
 // DELETE An ventas
-router.delete("/ventas/:idVendedor", deleteVenta);
+router.delete("/ventas/:idVenta", deleteVenta);
 
 // INSERT An ventas
 router.post("/ventas", createVenta);
 
-router.patch("/ventas/:idVendedor", updateVenta);
+router.patch("/ventas/:idVenta", updateVenta);
 
 export default router;

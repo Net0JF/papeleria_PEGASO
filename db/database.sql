@@ -3,9 +3,9 @@ CREATE DATABASE IF NOT EXISTS pegasodb;
 USE pegasodb;
 
 CREATE TABLE empleados (
-    id INT (11) NOT NULL AUTO_INCREMENT,
-    nombre VARCHAR (45) DEFAULT NULL,
-    salario INT(5) DEFAULT NULL,
+    idEmpleado INT (11) NOT NULL AUTO_INCREMENT,
+    nombreE VARCHAR (45) DEFAULT NULL,
+    salarioE INT(5) DEFAULT NULL,
     PRIMARY KEY (id)
 );
 
@@ -17,20 +17,28 @@ INSERT INTO empleados VALUES
     (3, 'sam',2500),
     (4, 'max',1500);
 
-
-
 CREATE TABLE productos (
-    codigo INT (11) NOT NULL AUTO_INCREMENT,
-    producto VARCHAR (45) DEFAULT NULL,
-    costo INT(5) DEFAULT NULL,
-    PRIMARY KEY (codigo)
-
+    idProdcuto INT (10) NOT NULL AUTO_INCREMENT,
+    productoE VARCHAR (20) DEFAULT NULL,
+    costoE INT(5) DEFAULT NULL,
+    PRIMARY KEY (idProdcuto)
 );
+
+INSERT INTO productos VALUES
+    (1,'libreta',15),
+    (2,'lapiz',4),
+    (3,'tijera',12),
+    (4,'sacapuntas',3);
 
 CREATE TABLE ventas (
-    id INT (11) NOT NULL AUTO_INCREMENT,
-    vendedor VARCHAR (45) DEFAULT NULL,
-    precio INT(5) DEFAULT NULL,
-    PRIMARY KEY (id)
-
+    idVenta INT (10) NOT NULL AUTO_INCREMENT,    
+    idProducto INT (10) NOT NULL,
+    precioE INT(5) NOT NULL,
+    PRIMARY KEY (idVenta)
 );
+
+INSERT INTO ventas VALUES
+    (1,1,15),
+    (2,2,4),
+    (3,1,12),
+    (4,2,10);
